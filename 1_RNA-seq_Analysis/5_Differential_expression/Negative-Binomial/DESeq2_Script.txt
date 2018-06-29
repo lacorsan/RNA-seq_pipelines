@@ -1,0 +1,37 @@
+
+library(DESeq2)
+##Load a matrix with the counts
+sampleTable <- read.table("Expression_Data.txt",header=T,sep="\t",row.names=1)
+##Load a phenotype matrix with the sample names in the first column and without headings
+## in the second column put the sample group under the heading "condition" 
+sampleCondition <- read.table("Phenotype.txt",header=T,sep="\t",row.names=1)
+##Create the DESeq object
+dds <- DESeqDataSetFromMatrix(countData=sampleTable,colData=sampleCondition,design=~condition)
+
+##Establish the factor order in the analysis
+dds$condition <- factor(dds$condition,levels=c("Group1","Group2"))
+##Launch the differential expression analysis
+dds <- DESeq(dds)
+res <- results(dds)
+res
+##Save the results
+write.csv(as.data.frame(res),file="Results_DESeq2.csv")
+
+##Order the results by the adjusted p-value
+resOrdered <- res[order(res$padj),]
+##summary of the results
+summary(res)
+##count significant genes at padj<=0.05
+sum(res$padj<=0.05,na.rm=T)
+##Decrease the alpha value (default = 0.1)
+res05 <- results(dds,alpha=0.05)
+sum(res05$padj<=0.05,na.rm=T)
+##MAplot 
+plotMA(res,main="DESeq2",ylim=c(-2,2))
+##Obtain the unshrunken log2 fold Changes and lfcMLE
+resMLE <- results(dds,addMLE=T)
+head(resMLE,4)
+plotMA(resMLE,MLE=TRUE,main="unshrunken LFC",ylim=c(-2,2))
+##Gene count graphs
+plotCounts(dds,gene=which.min(res$padj),intgroup="condition")
+

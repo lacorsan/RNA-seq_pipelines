@@ -1,0 +1,6 @@
+##Build index
+perl hisat2-build ~/Homo_sapiens/genome.fa ~/Homo_sapiens/genome.hisat
+##Run HiSat2
+perl ./hisat2 -x ~/Homo_sapiens/genome.hisat -p 32 --rna-strandness RF --known-splicesite-infile ~/Splicesites_GRCh37.82.txt \
+-1 ~/Sample_r1.fq \
+-2 ~/Sample_r2.fq  -S ~/Sample_HiSat.sam

@@ -1,0 +1,14 @@
+##Preparing Reference Sequences
+rsem-prepare-reference --gtf /media/luis/Seagate_8Tb_1/3_Tesis_RNAseq/Homo_sapiens.GRCh37.82.gtf --bowtie2 \
+-p 32 /genome.fa ref/human_ensembl 
+
+##Validate BAM
+rsem-sam-validator Sample.bam
+
+##Calculating Expression Values (From transcriptome BAM)
+~/RSEM-1.2.31/rsem-calculate-expression --bam  --alignments ~/Sample.toTranscriptome.bam \
+--estimate-rspd --paired-end -p 32 ~/ref/human_ensembl Sample_RSEMAligned
+
+##Calculating Expression Values Bowtie (from fastq file)
+rsem-calculate-expression -p 32 --paired-end --bowtie2 --estimate-rspd --append-names \
+--output-genome-bam /Sample_r1.fq.gz /Sample_r2.fq.gz /ref/human_ensembl Sample-RSEM-Aligned

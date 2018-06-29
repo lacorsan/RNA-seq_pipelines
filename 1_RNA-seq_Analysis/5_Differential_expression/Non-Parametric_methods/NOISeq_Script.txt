@@ -1,0 +1,27 @@
+
+library(NOISeq)
+tabla <- read.table("b_BM-DMvJJ-DM_1.4.2.1_Filt.txt",sep="\t",header=T,row.names=1)
+myfactors = data.frame(Condition = c(rep("JJ", 3), rep("BM",3)))
+mydata <- readData(data = tabla, factors = myfactors)
+
+##Differential expression
+##Available normalization methods: norm = "rpkm", "uqua", "tmm2, "none"
+mynoiseqbio = noiseqbio(mydata, k = 0.5, norm = "rpkm", nclust = 15, plot = FALSE,
+factor="Condition", lc = 0, r = 50, adj = 1.5,
+a0per = 0.9, random.seed = 12345, filter = 0, depth = NULL,
+cv.cutoff = NULL, cpm = NULL)
+
+options("max.print"=1E9)
+options("width"=10000)
+sink("NOISeq-RPKM_Results.txt")
+print(mynoiseqbio@results[[1]])
+sink()
+
+
+
+##k=Counts equal to 0 are replaced by k. By default, k = 0.5
+##norm = Normalization method. It can be one of "rpkm" (default), "uqua" (upper quartile),"tmm" (trimmed mean of M) or "n" (no normalization).##r Number of permutations to generate noise distribution by resampling.
+## adj Smoothing parameter for the Kernel Density Estimation of noise distribution. Higher values produce smoother curves.
+##nclust Number of clusters for the K-means algorithm. Used when the number of replicates per condition is less than 5.
+##a0per M and D values are corrected for the biological variability by being divided by S + a0, where S is the standard error of the corresponding statistic and a0 is determined by the value of a0per parameter. If a0per is NULL, a0 = 0. If a0per is a value between 0 and 1, a0 is the a0per percentile of S values for all features. If a0per = "B", a0 takes the highest value given by 100*max(S).##filter If filter=0, no filtering is performed
+

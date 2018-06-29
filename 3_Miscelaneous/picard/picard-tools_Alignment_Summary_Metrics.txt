@@ -1,0 +1,3 @@
+java -jar picard.jar CollectAlignmentSummaryMetrics R=genome.fa \
+I=Sample_POS.bam O=Sample_BAM-metrics.txt
+

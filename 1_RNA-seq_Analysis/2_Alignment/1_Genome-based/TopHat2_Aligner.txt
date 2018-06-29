@@ -1,0 +1,5 @@
+
+tophat2 --GTF Homo_sapiens.GRCh37.82.gtf --library-type fr-firststrand -p 32 \
+--output-dir Sample_TOP --mate-inner-dist XX Bowtie2Index/genome \
+Sample_r1.fq Sample_r2.fq
+

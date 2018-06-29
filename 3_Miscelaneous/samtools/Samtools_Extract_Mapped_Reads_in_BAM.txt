@@ -1,0 +1,2 @@
+samtools view -b -F 4 Sample.bam > Sample_M.bam
+

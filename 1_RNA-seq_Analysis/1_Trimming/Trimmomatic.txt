@@ -1,0 +1,19 @@
+
+java -jar trimmomatic-0.35.jar PE -threads 32 -phred33 Sample_r1.fastq.gz Sample_r2.fastq.gz \
+Sample_r1_paired.fq.gz Sample_r1_unpaired.fq.gz \
+Sample_r2_paired.fq.gz Sample_r2_unpaired.fq.gz \
+ILLUMINACLIP:TruSeq3-PE.fa:2:30:10:7:true LEADING:3 TRAILING:3 SLIDINGWINDOW:4:20 MINLEN:51
+
+
+##ILLUMINACLIP: Cut adapter and other illumina-specific sequences from the read.
+##SLIDINGWINDOW: Performs a sliding window trimming approach. It starts scanning at the 5' end and clips the read once the average quality within the window falls below a threshold.
+##MAXINFO: An adaptive quality trimmer which balances read length and error rate to maximise the value of each read
+##LEADING: Cut bases off the start of a read, if below a threshold quality
+##TRAILING: Cut bases off the end of a read, if below a threshold quality
+##CROP: Cut the read to a specified length by removing bases from the end
+##HEADCROP: Cut the specified number of bases from the start of the read
+##MINLEN: Drop the read if it is below a specified length
+##AVGQUAL: Drop the read if the average quality is below the specified level
+##TOPHRED33: Convert quality scores to Phred-33
+##TOPHRED64: Convert quality scores to Phred-64
+

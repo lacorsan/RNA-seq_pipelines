@@ -1,0 +1,8 @@
+#Create index
+./STAR --runMode genomeGenerate   --runThreadN 32   --genomeDir ./star_indexes \
+--genomeFastaFiles ./genome.fa \
+--sjdbGTFfile ./Homo_sapiens.GRCh37.82.gtf --sjdbOverhang 100
+#Run STAR
+./STAR --runThreadN 32 --genomeDir ./star_indexes --quantMode TranscriptomeSAM \
+--outFileNamePrefix Sample_STAR_transc --outSAMtype BAM Unsorted \
+--readFilesIn Sample_r1.fq Sample_r2.fq

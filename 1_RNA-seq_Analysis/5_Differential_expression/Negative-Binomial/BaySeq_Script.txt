@@ -1,0 +1,33 @@
+
+library(baySeq)
+##Define null cluster
+if(require("parallel")) cl <- makeCluster(8) else cl <- NULL
+
+##Load data
+tabla <- read.table("Expression_Data.txt",sep="\t",header=T,row.names=1)
+tabla <- as.matrix(tabla)
+##3 samples in 2 groups
+replicates <- c("Group1","Group1","Group1","Group2","Group2","Group2")
+groups <- list(NDE=c(1,1,1,1,1,1),DE=c(1,1,1,2,2,2))
+
+##Combine count data and models
+CD <- new("countData",data=tabla,replicates=replicates,groups=groups)
+
+##Inferre library size from data
+libsizes(CD) <-getLibsizes(CD)
+
+##Negative Binomial Approach
+##Estimate parameters
+###################quasi-likelihood estimation of priors#############################
+CD1 <- getPriors.NB(CD,samplesize=10000,estimation="QL",cl=cl)
+##Estimate proportions of DE counts
+CD1 <- getLikelihoods(CD1,cl=cl,bootStraps=3,verbose=FALSE)
+options("max.print"=1E9)
+options("width"=10000)
+sink("DE_baySeq_QL.txt")
+print(topCounts(CD1,group="DE",FDR=1))
+sink()
+sink("NDE_baySeq_QL.txt")
+print(topCounts(CD1,group="NDE",FDR=1))
+sink()
+

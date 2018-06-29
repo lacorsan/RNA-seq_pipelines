@@ -1,0 +1,22 @@
+
+#1 Building an index
+
+kallisto index -i TransGRCh37_82_Kallisto.idx /Transcriptome_REF/TransGRCh37_82.fa
+
+#2 Quantification using bootstrap for Sleuth (Differential expression)
+ 
+kallisto quant -i /Transcriptome_REF/Kallisto_idx/TransGRCh37_82_Kallisto.idx \
+-o Sample_Kallisto \
+--fr-stranded --threads 32 -b 100\
+Sample_r1.fq.gz \
+Sample_r2.fq.gz
+
+
+#2 Quantification w/o using bootstrap 
+
+time ~/kallisto_linux-v0.43.1/kallisto quant -i ~/Transcriptome_REF/Kallisto_idx/TransGRCh37_82_Kallisto.idx \
+-o /Sample_Kallisto \
+--fr-stranded --threads 32 \
+~/Sample_r1.fq \
+~/Sample_r2.fq
+

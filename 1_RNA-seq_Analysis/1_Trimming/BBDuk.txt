@@ -1,0 +1,4 @@
+bash bbduk.sh in1=Sample_r1.fastq.gz in2=Sample_r2.fastq.gz \
+out1=Sample_r1_BB.fastq.gz out2=Sample_r2_BB.fastq.gz ref=TruSeq3-PE.fa threads=32 \
+ktrim=r k=31 mink=11 hdist=2 rcomp=t tbo tpe qtrim=rl trimq=20 minlength=51 stats=Sample_BBstats.txt
+

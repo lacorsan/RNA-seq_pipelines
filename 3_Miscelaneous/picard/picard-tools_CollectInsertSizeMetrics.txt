@@ -1,0 +1,2 @@
+java -jar picard.jar CollectInsertSizeMetrics INPUT=Sample_POS.bam HISTOGRAM_FILE=Sample_histo OUTPUT=Sample_out
+

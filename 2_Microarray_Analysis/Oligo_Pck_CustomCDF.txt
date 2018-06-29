@@ -1,0 +1,24 @@
+
+library(pdInfoBuilder)
+library(ff)
+library(doMC)
+registerDoMC(10) ## set to number of cores you want to use
+
+##Download package
+download.file("http://mbni.org/customcdf/19.0.0/ensg.download/hta20_Hs_ENSG_19.0.0.zip","tmp.zip")
+unzip("tmp.zip")
+dir()
+##Build package
+z <- cdf2table("hta20_Hs_ENSG.cdf")
+seed <- new("GenericPDInfoPkgSeed", table=z, author = "me", email = "me@mine.org", species = "Homo sapiens", pkgName = "pd.hta20hsensg")
+makePdInfoPackage(seed)
+install.packages("pd.hta20hsensg/", repos = NULL)
+##Analyse
+dat <- read.celfiles(filenames = list.celfiles(), pkgname = "pd.hta20hsensg")
+ppData <- rma(dat)
+options("max.print"=1E9)
+options("width"=10000)
+sink("a_Samples_ENSG19_RMA.txt")
+print(exprs(ppData))
+sink()
+

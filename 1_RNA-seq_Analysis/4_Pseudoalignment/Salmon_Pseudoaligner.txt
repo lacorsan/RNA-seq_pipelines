@@ -1,0 +1,37 @@
+
+##Quasi-mapping-based mode
+#1 Building an index
+/home/luis/Desktop/salmon-master/build/src/salmon index -t /Transcriptome_REF/TransGRCh37_82.fa -i TransGRCh37_82_SalmonQuasi --type quasi -k 31
+
+#2 Quantify
+~/Salmon-0.8.2_linux_x86_64/bin/salmon quant \
+-i ~/Transcriptome_REF/Salmon_idx/Quasi/TransGRCh37_82_SalmonQuasi -l ISR \
+-1 ~/Sample_r1.fastq \
+-2 ~/Sample_r2.fastq \
+-o /Sample_QMB_Salmon_ISR -p 32
+
+
+##Lightweight-alignment (FMD-based) mode
+#1 Building an index
+/home/luis/Desktop/salmon-master/build/src/salmon index -t /Transcriptome_REF/TransGRCh37_82.fa -i TransGRCh37_82_SalmonFMD --type fmd
+
+#2 Quantify
+/home/luis/Desktop/salmon-master/build/src/salmon quant \
+-i /Transcriptome_REF/Salmon_idx/FMD/TransGRCh37_82_SalmonFMD -l ISR \
+-1 /Sample_r1.fq.gz \
+-2 /Sample_r2.fq.gz \
+-o Sample_FMD_Salmon_ISR
+
+
+#<LIBTYPE> -l
+A = Automatically infer
+
+I = inward
+O = outward
+M = matching
+
+S = stranded
+U = unstranded
+
+F = read 1 (or single-end read) comes from the forward strand
+R = read 1 (or single-end read) comes from the reverse strand

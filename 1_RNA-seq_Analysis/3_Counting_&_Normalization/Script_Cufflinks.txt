@@ -1,0 +1,6 @@
+##Assemble transcripts for each sample 
+
+~/cufflinks-2.2.1.Linux_x86_64/cufflinks -p 32 --library-type fr-firststrand -G ~/Homo_sapiens.GRCh37.82.gtf \
+-o /Sample_cuffl ~/Sample.bam
+
+

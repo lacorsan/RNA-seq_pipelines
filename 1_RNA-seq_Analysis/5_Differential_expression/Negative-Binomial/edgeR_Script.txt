@@ -1,0 +1,34 @@
+
+tabla <- read.table("Expression_Data.txt",header=T,sep="\t",row.names=1)
+library(edgeR)
+##Create list and calculate library sizes
+group <- c(1,1,1,2,2,2)
+d <- DGEList(counts=tabla,group=factor(group))
+d
+##Normalization
+dt <- calcNormFactors(d,method="TMM")
+##Estimate dispersion
+d1 <- estimateCommonDisp(dt, verbose=T)
+d1 <- estimateTagwiseDisp(d1)
+design.mat <- model.matrix(~ 0 + dt$samples$group)
+colnames(design.mat) <- levels(dt$samples$group)
+d2 <- estimateGLMCommonDisp(dt,design.mat)
+d2 <- estimateGLMTrendedDisp(d2,design.mat, method="auto")
+# You can change method to "auto", "bin.spline", "power", "spline", "bin.loess".
+# The default is "auto" which chooses "bin.spline" when > 200 tags and "power" otherwise.
+d2 <- estimateGLMTagwiseDisp(d2,design.mat)
+
+##Compare groups (exact test)
+et12 <- exactTest(d1, pair=c(1,2))
+options("max.print"=1E9)
+options("width"=10000)
+sink("edgeR_ExactTest_TMM.txt")
+print(topTags(et12, n=length(tabla[,1]), adjust.method="BH", sort.by="PValue", p.value=1))
+sink()
+
+##Compare groups GLM Log Likelihood Ratio
+fit <- glmFit(d2,design.mat)
+lrt12 <- glmLRT(fit,contrast=c(-1,1))
+sink("edgeR_GLM_TMM.txt")
+print(topTags(lrt12 , n=length(tabla[,1]), adjust.method="BH", sort.by="PValue", p.value=1))
+sink()

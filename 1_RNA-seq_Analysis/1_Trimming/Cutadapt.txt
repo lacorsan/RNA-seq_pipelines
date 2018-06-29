@@ -1,0 +1,3 @@
+~/.local/bin/cutadapt -m 51 -j 32 -a file:TruSeq3-PE.fa -A file:TruSeq3-PE.fa -q 20 -e 0.06 -o Sample_r1_Cut.fastq.gz -p Sample_r2_Cut.fastq.gz \
+Sample_r1.fastq.gz Sample_r2.fastq.gz
+

@@ -1,0 +1,19 @@
+##Assemble transcripts for each sample
+cufflinks -p 12 --library-type fr-firststrand -G Homo_sapiens.GRCh37.82.gtf -o Sample_cufflinks /Sample.bam
+
+##Create a file called assemblies.txt:
+./Sample_1/transcripts.gtf
+./Sample_2/transcripts.gtf
+./Sample_N/transcripts.gtf
+
+##Run cuffmerge to create a single transcriptome annotation
+cuffmerge -g Homo_sapiens.GRCh37.82.gtf -s genome.fa -p 32 assemblies.txt
+
+##CuffQuant
+cuffquant -g /media/luis/Seagate_8Tb_1/3_Tesis_RNAseq/Homo_sapiens.GRCh37.82.gtf -b genome.fa -p 12 --library-type fr-firststrand 141048.bam
+
+##Differentially expressed genes and transcripts
+cuffdiff -o Cuffdiff_out -b genome.fa -p 32 -L Treatment,Control --library-type fr-firststrand -b genome.fa -u merged_asm/merged.gtf \
+Treatment_1.cxb,Treatment_2.cxb,Treatment_N.cxb \
+Control_1.cxb,Control_2.cxb,Control_N.cxb
+

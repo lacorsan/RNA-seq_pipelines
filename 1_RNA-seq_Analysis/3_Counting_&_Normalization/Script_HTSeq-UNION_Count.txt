@@ -1,0 +1,3 @@
+
+python -m HTSeq.scripts.count -m union -s reverse -r name -a 10 -i gene_id -f bam \
+Sample.bam Homo_sapiens.GRCh37.82.gtf > Sample.UNION.counts

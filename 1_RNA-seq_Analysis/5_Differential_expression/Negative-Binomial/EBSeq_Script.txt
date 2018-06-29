@@ -1,0 +1,16 @@
+
+library(EBSeq)
+tabla <- read.table("Expression_Data.txt",sep="\t",header=T,row.names=1)
+tabla <- as.matrix(tabla)
+Sizes=MedianNorm(tabla)
+EBOut=EBTest(Data=tabla,Conditions=as.factor(rep(c("Group1","Group2"),each=3)),sizeFactors=Sizes, maxround=5)
+EBDERes=GetDEResults(EBOut, FDR=1,Threshold_FC=1,Threshold_FCRatio=0)
+##Calculate FC
+FC <- PostFC(EBOut, SmallNum = 0.01)
+##Obtain probabilities 
+Expresion <- cbind(EBDERes$PPMat,EBDERes$Status,FC$PostFC,FC$RealFC)
+options("max.print"=1E9)
+options("width"=10000)
+sink("EBSeq_Results.txt")
+print(Expresion)
+sink()

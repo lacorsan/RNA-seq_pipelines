@@ -1,0 +1,30 @@
+
+library(limma)
+library(edgeR)
+tabla <- read.table("Expression_Data.txt",sep="\t",header=T,row.names=1)
+dge <- DGEList(counts=tabla)
+##design
+targets<-readTargets("Targets.txt")
+Treat<-factor(targets$Treatment,levels=c("Group1","Group2"))
+design<-model.matrix(~Treat)
+##Normalizing
+dge <- calcNormFactors(dge)
+##Differential expression: Limma trend
+#convert counts to logCPM
+logCPM <- cpm(dge,log=TRUE,priot.count=3)
+##Fit the model
+fit <- lmFit(logCPM,design)
+fit <- eBayes(fit,trend=TRUE)
+options("max.print"=1E9)
+options("width"=10000)
+sink("limma-Trend_Results.txt")
+print(topTable(fit,coef=ncol(design),p.value=1, number= length(tabla[,1])))
+sink()
+
+##Voom method
+v <- voom(dge,design,plot=T)
+fitv <- lmFit(v,design)
+fitv <- eBayes(fitv)
+sink("limma-VOOM_Results.txt")
+print(topTable(fitv,coef=ncol(design),p.value=1, number= length(tabla[,1])))
+sink()

@@ -1,0 +1,24 @@
+##Kruskal-Wallis test and Dunn's post-hoc:
+##INPUT:
+## x[,1] = data vector
+## x[,2] = grouping vector (i.e., 1 1 1 2 2 3 3 3...)
+
+tmp.wid=getOption("width")
+options(width=10000)
+options("max.print"=1E9)
+x <- read.table("x_ninos_gain.txt", sep="\t")
+d <- as.matrix(x[,1])
+d <- as.numeric(d)
+g <- as.matrix(x[,2])
+g <- as.factor(g)
+library(dunn.test)
+#Run Dunn's test
+None <- dunn.test (d, g, method="none", kw=TRUE, label=TRUE,wrap=T, alpha=0.05)
+#Run Dunn's test adjusting p-values for multiple hypotheses using the Benjamini-Hochberg's FDR
+BHadj <- dunn.test (d, g, method="BH", kw=TRUE, label=TRUE,wrap=T, alpha=0.05)
+sink("Dunn_NoCorrection.txt")
+print(None)
+sink()
+sink("Dunn_BH_Adjusted.txt")
+print(BHadj)
+sink()

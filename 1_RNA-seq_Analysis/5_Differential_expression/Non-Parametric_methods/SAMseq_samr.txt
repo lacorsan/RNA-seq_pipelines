@@ -1,0 +1,15 @@
+
+library(samr)
+tabla <- read.table("Expression_Data.txt", header=T, sep="\t", row.names=1)
+##Group1 Samples (control)
+n1 <- 3
+##Group2 (treatment)
+n2 <- 3
+tabla.cls <- rep(c(1,2),c(n1,n2))
+sam.out <- SAMseq(tabla,tabla.cls,resp.type="Two class unpaired",nperms=1000,random.seed=123456,genenames=rownames(tabla),fdr.output =1)
+options("max.print"=1E9)
+options("width"=10000)
+sink("SAMseq_Results.txt")
+print(sam.out$siggenes.table)
+sink()
+

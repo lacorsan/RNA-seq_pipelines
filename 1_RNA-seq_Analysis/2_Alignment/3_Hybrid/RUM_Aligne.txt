@@ -1,0 +1,4 @@
+
+perl bin/rum_runner align --index-dir ~/rum_indexes/hg19 --output Sample_RUM \
+--chunks 32 ~/Sample_r1_N.fq ~/Sample_r2_N.fq --name Sample_RUM
+

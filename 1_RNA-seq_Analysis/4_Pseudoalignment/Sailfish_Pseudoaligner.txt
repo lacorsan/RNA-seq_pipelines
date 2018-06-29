@@ -1,0 +1,13 @@
+#1 Building an index
+sailfish index -t /Transcriptome_REF/TransGRCh37_82.fa -o TransGRCh37_82_Sailfish -k 31
+
+#2 Quantify
+sailfish quant \
+-i /Transcriptome_REF/Sailfish_idx/TransGRCh37_82_Sailfish -l ISR \
+-1 <(gunzip Sample_r1.fq.gz) \
+-2 <(gunzip Sample_r2.fq.gz) \
+-o Sample_Sailfish_ISR
+
+
+#<libtype>
+http://sailfish.readthedocs.io/en/master/library_type.html#fraglibtype

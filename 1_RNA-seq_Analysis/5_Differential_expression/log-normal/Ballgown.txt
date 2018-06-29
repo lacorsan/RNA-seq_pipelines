@@ -1,0 +1,36 @@
+
+#1# Estimate transcript abundances and create table counts for Ballgown (1 for each sample)
+stringtie -e -B -p 32 -G Homo_sapiens.GRCh37.82.gtf -o ./Sample.gtf Sample.bam
+
+
+#2# Run Ballgown in R
+library(ballgown)
+library(RSkittleBrewer)
+library(genefilter)
+library(dplyr)
+library(devtools)
+
+#Load the phenotype data for the samples
+pheno_data = read.csv("Phenotype.csv")
+##Format:ids Treatment cov2 
+
+#Read in the expression data that were calculated by StringTie or Cufflinks
+bg = ballgown(dataDir = "Ballgown", samplePattern = "Sample", pData=pheno_data)
+
+#Filter to remove low-abundance genes. One common issue with RNA-seq data is that genes often have very few or zero counts
+bg_filt = subset(bg,"rowSums(gexpr(bg) >=4) >=1",genomesubset=TRUE)
+
+#Identify genes that show statistically significant differences between groups
+results_genes_F = stattest(bg_filt, feature="gene", covariate="Treatment", getFC=TRUE, meas="FPKM")
+
+#Write the results to a csv file that can be shared and distributed:
+write.csv(results_genes_F, "Ballgown_FPKM_results_gexpr.csv",row.names=FALSE)
+
+##Add HUGO gene symbol
+indices <- match(results_genes_F$id, texpr(bg, 'all')$gene_id)
+gene_names_for_result <- texpr(bg, 'all')$gene_name[indices]
+results_genes_F <- data.frame(geneNames=gene_names_for_result, results_genes_F)
+write.csv(results_genes_F, "Ballgown_FPKM_results.csv",row.names=FALSE)
+
+
+

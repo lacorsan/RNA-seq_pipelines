@@ -1,0 +1,6 @@
+#Reheader BAM
+#1 Extract BAM header:
+samtools view -H A.bam > header.sam
+#2 Edit the header
+#3 Change the header
+samtools reheader header.sam A.bam > B.bam

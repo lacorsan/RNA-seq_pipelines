@@ -1,0 +1,2 @@
+~/express-1.5.1-linux_x86_64/express --rf-stranded ~/ref/human_ensembl.transcripts.fa \
+Sample.toTranscriptome.bam --output-dir /Sample_eXpress
