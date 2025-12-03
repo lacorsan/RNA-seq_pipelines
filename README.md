@@ -73,7 +73,7 @@ RNA-seq_pipelines/
 
 ---
 
-## 🧬 RNA-seq Workflow Overview
+## RNA-seq Workflow Overview
 
 A typical RNA-seq analysis workflow supported by this repository includes:
 
@@ -96,7 +96,7 @@ A typical RNA-seq analysis workflow supported by this repository includes:
 
 ---
 
-## 🧪 Microarray Analysis
+## Microarray Analysis
 
 Scripts for processing microarray data using Custom CDFs and the `oligo` package.
 
@@ -112,7 +112,7 @@ Additional helper utilities for:
 
 ---
 
-## 📌 Notes
+## Notes
 
 - Scripts may require adaptation depending on program versions, HPC environment, or species annotations.
 - Please check tool documentation for installation and system requirements.
