@@ -1,9 +1,9 @@
-# RNA-seq_pipelines
+# RNA-seq pipelines
 
 This repository provides a structured collection of scripts and workflows for RNA-seq data processing and analysis, including trimming, alignment, quantification, pseudalignment, and differential expression. It also contains auxiliary tools for microarray analysis and additional utilities commonly used in NGS pipelines.
 
 ## Repository Structure
----
+
 RNA-seq_pipelines/
 │
 ├── 1_RNA-seq_Analysis/
@@ -67,7 +67,7 @@ RNA-seq_pipelines/
 └── samtools/
 ├── Samtools_Extract_Mapped_Reads.txt
 └── Samtools_Reheader_BAM.txt
----
+
 
 
 ---
