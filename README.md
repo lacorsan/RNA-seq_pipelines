@@ -4,6 +4,7 @@ This repository provides a structured collection of scripts and workflows for RN
 
 ## Repository Structure
 
+```
 RNA-seq_pipelines/
 │
 ├── 1_RNA-seq_Analysis/
@@ -67,7 +68,7 @@ RNA-seq_pipelines/
 └── samtools/
 ├── Samtools_Extract_Mapped_Reads.txt
 └── Samtools_Reheader_BAM.txt
-
+```
 
 
 ---
