@@ -102,7 +102,7 @@ Scripts for processing microarray data using Custom CDFs and the `oligo` package
 
 ---
 
-## 🔧 Miscellaneous Tools
+## Miscellaneous Tools
 
 Additional helper utilities for:
 - Adding N bases to FASTQ reads
