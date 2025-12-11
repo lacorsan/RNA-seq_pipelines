@@ -75,7 +75,6 @@ RNA-seq_pipelines/
 
 ## RNA-seq Workflow Overview
 
-A typical RNA-seq analysis workflow supported by this repository includes:
 
 1. **Quality trimming & adapter removal**  
    Tools: `BBDuk`, `Cutadapt`, `Trimmomatic`
